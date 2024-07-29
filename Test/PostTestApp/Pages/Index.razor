@@ -1,0 +1,46 @@
+﻿@page "/"
+@using PostTestApp.Model;
+
+<h3>Add a New Car</h3>
+
+<EditForm Model="@newCar" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label for="brand">Brand</label>
+        <InputText id="brand" @bind-Value="newCar.Brand" class="form-control" />
+        <ValidationMessage For="@(() => newCar.Brand)" />
+    </div>
+
+    <div class="form-group">
+        <label for="year">Year</label>
+        <InputNumber id="year" @bind-Value="newCar.Year" class="form-control" />
+        <ValidationMessage For="@(() => newCar.Year)" />
+    </div>
+
+    <div class="form-group">
+        <label for="model">Model</label>
+        <InputText id="model" @bind-Value="newCar.Model" class="form-control" />
+        <ValidationMessage For="@(() => newCar.Model)" />
+    </div>
+
+    <div class="form-check">
+        <label class="form-check-label">
+            <InputCheckbox @bind-Value="newCar.SpareWheel" class="form-check-input" />
+            Spare Wheel
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Car</button>
+</EditForm>
+
+@inject Data.AppDBContext dbContext
+@code {
+    private Car newCar = new Car();
+
+    private async Task HandleValidSubmit()
+    {
+        dbContext.Cars.Add(newCar);
+        await dbContext.SaveChangesAsync();
+    }
+}

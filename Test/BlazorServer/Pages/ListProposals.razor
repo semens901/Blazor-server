@@ -1,0 +1,109 @@
+@page "/ListProposals"
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+@using BlazorServer.Models
+@using System.Reflection
+@inject ILibraryService LibraryService
+
+
+<PageTitle>Список заявок</PageTitle>
+
+<h1>Список заявок</h1>
+
+<DataGrid TItem="Proposal"
+          Data="Proposals"
+          PageSize="10"
+          ShowPager
+          Responsive
+          Sortable="true"
+          Editable>
+        <DataGridColumns>
+            <DataGridCommandColumn  NewCommandAllowed="false" EditCommandAllowed="false" DeleteCommandAllowed="false"  CancelCommandAllowed >
+            <SaveCommandTemplate>
+                <Button ElementId="btnSave" Type="ButtonType.Submit" PreventDefaultOnSubmit Color="Color.Primary" Clicked="@context.Clicked">@context.LocalizationString</Button>
+            </SaveCommandTemplate>
+            <CancelCommandTemplate>
+                <Button ElementId="btnCancel" Color="Color.Secondary" Clicked="@context.Clicked">@context.LocalizationString</Button>
+            </CancelCommandTemplate>
+            </DataGridCommandColumn>
+            <DataGridColumn Field="@nameof(Proposal.Id)" Caption="№ заявки" Sortable="true" Editable />
+            <DataGridColumn Field="@nameof(Proposal.NumberProposal)" Caption="Автор заявки" Sortable="true" Editable />
+            <DataGridColumn Field="@nameof(Proposal.FullNumber)" Caption="Подразделение автора" Sortable="true" Editable />
+            <DataGridColumn Field="@nameof(Proposal.DateTimeCreate)" DisplayFormat="{0:dd.MM.yyyy}" Caption="Дата создания" Sortable="true" Editable />
+            <DataGridColumn Field="@nameof(Proposal.Status)" Caption="Статус" Sortable="true" Editable />
+        </DataGridColumns>
+</DataGrid>
+
+@code
+{
+    public IEnumerable<Proposal> Proposals { get; set; }
+    protected override void OnInitialized()
+    {
+        Proposals = LibraryService.GetProposals();
+    }
+}
+
+@code
+{
+    /*
+    private List<Proposal> proposals;
+    private Proposal proposal = new Proposal();
+    private string filter;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        proposals = await HttpClient.GetFromJsonAsync<List<Proposal>>(NavigationManager.BaseUri + "proposals");
+    } 
+
+    /*private async Task Add()
+    {
+        using(var msg = await Http.PostAsJsonAsync<Proposal>());
+            newcust.NumberProposal = newcust.a
+    }* /
+
+    private async Task Save(ChangeEventArgs e, Proposal prop, string propField)
+    {
+        PropertyInfo pinfo = typeof(Proposal).GetProperty(propField);
+        pinfo.SetValue(prop, e.Value);
+
+        using (var msg = await HttpClient.PutAsJsonAsync<Proposal>(NavigationManager.BaseUri + $"proposals/{prop.Id}", prop, System.Threading.CancellationToken.None))
+        {
+            			if (msg.IsSuccessStatusCode)
+			{
+			}
+			else
+			{
+				// DO SOMETHING
+			}
+        }
+    }
+
+    private async Task Delete(int Id)
+    {
+        using(var msg = await HttpClient.DeleteAsync(NavigationManager.BaseUri + $"proposals/{Id}"))
+        {
+            if(msg.IsSuccessStatusCode)
+            {
+                int i = 0;
+                for(i = 0; i < proposals.Count && proposals[i].Id != Id; i++);
+                    proposals.RemoveAt(i);
+            }
+        }
+    }
+*/
+}
+
+@code
+{
+    /*
+    List<Proposal> proposals = new List<Proposal>();
+    private Proposal selectedProposal;
+    private DataGridEditMode editMode = DataGridEditMode.Form;
+    protected override async Task OnInitializedAsync()
+    {
+        proposals = await HttpClient.GetFromJsonAsync<List<Proposal>>(NavigationManager.BaseUri + "proposals");
+    }
+
+    */
+}

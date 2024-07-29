@@ -1,0 +1,23 @@
+﻿@page "/"
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+@using BlazorServer.Models
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+
+
+@code
+{
+    /*
+    List<Proposal> proposals = new List<Proposal>();
+    protected override async Task OnInitializedAsync()
+    {
+        proposals = await HttpClient.GetFromJsonAsync<List<Proposal>>(NavigationManager.BaseUri + "proposals");
+    }
+    */
+}
